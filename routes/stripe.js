@@ -15,8 +15,7 @@ const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 router.get("/payment/search/:id", async (req, res) =>{
   try {
-    console.log('retrievinggggggggggggggg')
-    
+
     const session = await stripe.checkout.sessions.retrieve(req.params.id, {
       expand: ['customer','line_items', 'payment_intent'],
     });
@@ -40,7 +39,7 @@ router.post("/payment", async (req, res) => {
   
   const childrenResponses = await Promise.all(
     req.body.products.map((product) =>
-      fetch(`http://localhost:5000/api/products/find/${product.id}`)
+      fetch(process.env.APP_API + `products/find/${product.id}`)
             .then(response=>response.json())
             .then(res => {
               

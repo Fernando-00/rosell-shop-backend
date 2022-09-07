@@ -23,7 +23,7 @@ const verifyToken = (req, res, next)=>{
 const verifyStripe = (req, res, next)=>{
     console.log(req.body.stripeId)
     if(req.body.stripeId){
-        fetch(`http://localhost:5000/api/checkout/payment/search/${req.body.stripeId}`)
+        fetch(process.env.APP_API + `checkout/payment/search/${req.body.stripeId}`)
             .then(res => {
                 if (res.ok) return next()
                 return res.json().then(json => Promise.reject(json))
